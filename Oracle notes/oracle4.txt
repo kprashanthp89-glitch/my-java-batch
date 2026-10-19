@@ -1,0 +1,376 @@
+DDL commands
+===========
+1) create - tables 
+2) alter  - columns 
+3) drop   - tables 
+4) truncate - rows/records
+5) rename - tables
+
+3) drop command 
+================
+A drop command is used to drop the tables.
+
+syntax:
+------
+	drop table <table_name>;
+ex:
+	drop table student;
+	drop table emp;
+	drop table dept;
+
+4) truncate command
+===================
+It is used to delete the rows permenently from database table.
+
+syntax:
+-------
+	truncate table <table_name>;
+ex:
+	truncate table student;
+	truncate table dept;
+	truncate table emp;
+
+
+Q) What is the difference between delete and truncate command?
+
+delete					truncate
+-----------				----------
+It is a DML command.			It is a DDL command.
+
+It deletes the data temperory.		It deletes the data permenently.
+
+We can rollback the data.		We can't rollback the data.
+
+Where clause can be used.		Where clause can't be use.
+
+5) rename command
+==============
+It is used to rename table name.
+
+syntax:
+-------
+	rename <old_name> to <new_name>;
+ex:
+	rename emp to employees;
+	rename dept to department;
+	rename student to students;
+
+
+Functions 
+=========
+Functions are used to manipulate the data items and gives the result.
+
+We have two types of functions.
+
+1) Group Functions / Multiple Rows Functions 
+
+2) Scalar Functions / Single Row Functions 
+
+1) Group Functions 
+-------------------
+Group functions are applicable for multiple rows.
+
+We have following list of group functions.
+ex:
+	sum(), avg(), max(), min(), count(*) and  count(exp).
+
+ 
+Q) Write a query to display sum of salary of each employee from employee table?
+
+	select sum(esal) from emp;
+
+
+Q) Write a query to display average salary of each employee ?
+
+	select avg(esal) from emp;
+
+
+Q) Write a query to display highest salary from employee table?
+
+	select max(esal) from emp;
+
+
+Q) Write a query to display least salary from employee table?
+
+	select min(esal) from emp;
+
+
+Q) What is the difference between count(*) and count(exp) ? 
+
+count(*)
+---------
+It returns number of records present in database table.
+It includes null records.
+ex:
+	select count(*) from emp;	
+	select count(*) from dept;
+	select count(*) from student;
+
+count(exp)
+----------
+It returns number of values present in a column.
+It won't include null values.
+ex:
+	select count(eid) from emp;
+	select count(esal) from emp;
+	select count(comm) from emp;
+
+
+userlist table 
+==============
+drop table userlist;
+create table userlist(uname varchar2(10),pwd varchar2(10));
+insert into userlist values('raja','rani');
+insert into userlist values('king','kingdom');
+commit;
+
+
+Q) Write a query to check username and password valid or not?
+
+	select count(*) from userlist where uname='raja' and pwd='rani'; -- 1
+
+
+Dual table 
+==========
+Dual table is a dummy table which contains one row and one column.
+It is used to perform arithmetic operations and to see the current system date.
+ex:
+	select 10+20 from dual;
+	select 10*20 from dual;
+	select sysdate from dual;
+	select current_date from dual;
+	
+
+2) Scalar Functions
+--------------------
+Scalar functions are applicable for single row.
+
+We have following list of scalar functions.
+
+i) Character Functions 
+
+ii) Number Functions 
+
+iii) Date Functions 
+
+iv) Conversion Functions 
+
+i) Character Functions 
+----------------------
+We have following list of character functions.
+
+upper()
+--------
+	It is used to convert the string to uppercase.
+	ex:
+		select upper('oracle') from dual;
+		select upper('oracle') as output from dual;
+
+lower()
+-------
+	It is used to convert the string to lowercase.
+	ex:
+		select lower('ORACLE') from dual;
+		select lower('ORACLE') as output from dual;
+
+
+initcap()
+----------
+	It is used to display the string with initcap.
+	ex:
+		select initcap('oracle training') from dual;
+		select initcap('oracle training') as output from dual;
+
+lpad()
+-------
+	It is used to pad the characters towards left side.
+	ex:
+		select lpad('oracle',10,'z') from dual; -- zzzzoracle
+rpad()
+------
+	It is used to pad the characters towards right side.
+	ex:
+		select rpad('oracle',10,'z') from dual;	 -- oraclezzzz	
+
+ltrim()
+-------
+	It is used to trim the characters from left side.
+	ex:
+		select ltrim('zzoraclezz','z') from dual; -- oraclezz
+
+rtrim()
+--------
+	It is used to trim the characters from right side.
+	ex:
+		select rtrim('zzoraclezz','z') from dual; -- zzoracle
+
+trim()
+--------
+	It is used to trim the characters from both the sides.
+	ex:
+		select trim('z' from 'zzoraclezz') from dual; --oracle 
+
+replace()
+---------
+	It is used to replace the character.
+	ex:
+		select replace('AlAn','A','a') from dual; -- alan
+concat() 
+-------
+	It is used to concatinate two strings.
+	ex:
+		select concat('raise','tech') from dual; -- raisetech
+		select concat(concat('mega','star'),'chiru') from dual;
+
+
+Interview Queries
+-----------------
+
+Q) Replace all '0' to '9' when we are printing employees information?
+
+	select eid,ename,replace(esal,'0','9') as esal from emp;
+
+
+customer table 
+--------------
+drop table customer;
+create table customer(id number(3),name varchar2(18),address varchar2(12));
+insert into customer values(101,'Alan Morries','Taxas');
+insert into customer values(102,'Erick Anderson','Florida');
+insert into customer values(103,'Ana Julie','Dellas');
+insert into customer values(104,'Mark Jose','Chicago');
+commit;
+
+Input:
+       101 Alan Morries       Taxas
+       102 Erick Anderson     Florida
+       103 Ana Julie          Dellas
+       104 Mark Jose          Chicago
+
+Output:
+	Alan 	
+	Erick 
+	Ana 
+	Mark 
+
+	select regexp_substr(name,'\S+',1,1) from customer;
+
+Input:
+       101 Alan Morries       Taxas
+       102 Erick Anderson     Florida
+       103 Ana Julie          Dellas
+       104 Mark Jose          Chicago
+
+Output:
+	Morries 	
+	Anderson 
+	Julie 
+	Jose
+
+	select regexp_substr(name,'\S+',1,2) from customer;
+
+
+
+ii) Number Functions 
+---------------------
+We have following list of number functions.
+
+abs()
+------
+	It is used to convert the number to positive.
+	ex:
+		select abs(-10) from dual;
+		select abs(-10.56) from dual;
+
+sqrt()
+-----
+	It returns exact square root of a number.
+	ex:
+		select sqrt(25) from dual;
+		select sqrt(26) from dual;
+
+power(A,B)
+-----------
+	It returns power value.
+	ex:
+		select power(5,3) from dual; 
+
+ceil()
+-----	
+	It returns ceil value.
+	ex:
+		select ceil(10.6) from dual; -- 11
+		select ceil(6.1) from dual;  -- 7
+
+floor()
+--------
+	It returns floor value.
+	ex:
+		select floor(10.6) from dual; -- 10
+		select floor(6.1) from dual;  -- 6
+
+round()
+--------
+	It returns nearest value.
+	ex:
+		select round(10.5) from dual; -- 11 
+		select round(10.4) from dual; -- 10
+	
+trunc()
+--------
+	It returns number without decimals.
+	ex:
+		select trunc(10.56) from dual; -- 10
+		select trunc(-187.38) from dual; -- -187
+
+greatest()
+-----------
+	It returns greatest value.
+	ex:
+		select greatest(7,9,1,2,5) from dual; 
+
+least()
+-------
+	It returns least value.
+	ex:
+		select least(7,9,1,2,5) from dual;
+
+
+Working with Date values
+========================
+Every database software supports different date patterns.
+ex:
+	oracle - dd-MMM-yy
+	mysql  - yyyy-MM-dd 
+	and etc.
+
+emp1 table 
+==========
+drop table emp1;
+create table emp1(eid number(3),ename varchar2(10),edoj date);
+insert into emp1 values(401,'Alan','01-JAN-26');
+insert into emp1 values(402,'Jose','17-MAR-26');
+insert into emp1 values(403,'Mark',sysdate);
+commit;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

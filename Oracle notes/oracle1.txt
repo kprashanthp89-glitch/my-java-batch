@@ -1,0 +1,269 @@
+Types of data 
+=============
+A data is a rawfacts , values or observations that can be stored, processed and analyzed to option meaningful information.
+
+We have three types of data.
+
+1) Structured Data 
+
+2) Semi-Structured Data 
+
+3) Unstructured Data 
+
+1) Structured Data 
+------------------
+Data that is organized in fixed format usually known as rows and columns is called 
+structured data.
+ex:
+	Id		Name		Address
+	----		------		--------
+	101		Alan		Texas
+
+2) Semi-Structured Data
+-----------------------
+Data that does not follow strict table structure but has organization/arrangement using tags, keys and metadata.
+
+ex:
+	JSON
+	----
+	{
+		"eid":101,
+		"ename":"Alan",
+		"eadd":"Texas"
+	}
+
+	XML
+	---
+	<student>
+		<id>101</id>
+		<name>Alan</name>
+		<address>Texas</address>
+	</student>
+
+
+3) Unstructured Data 
+-------------------
+Data that does not follow predefined structure is called unstructured data.
+ex:
+	Files 
+	Images
+	Videos
+	Gmail inbox 
+	social media content 
+
+
+
+Q) What is the difference between DBMS and RDBMS ? 
+
+DBMS						RDBMS 
+-----						------
+It stands for Database Management System.	It stands for Relational Database Management 
+						System. 
+
+It stores the data in files.			It stores the data in tables.
+
+It is not designed to handle			It is designed to handle large amount 
+large amount of data.				of data.
+
+It provides facility to connect			It provides facility to connect
+only one user at a time.			multiple user's at a time.
+
+It does not support normalization.		It supports normalization.
+
+No security of data.				High security of data.
+
+
+
+Q) What is RDBMS? 
+
+RDBMS is a database management system that stores the data in related tables and provides mechanism to process, manage and modify the data.
+ex:
+		
+				 cust_id
+		customer <----------------------> order 
+
+We have following list of relational databases.
+ex:
+	Oracle
+	MySQL
+	SQL Server
+	Postgresql
+	and etc.
+
+Oracle 
+======
+It is a relational database management system provided by Oracle Corporation.
+
+It is used to store, manage, retrieve or modify structured data.
+
+It provides two important languages to work with data or database logics.
+
+1) SQL - (Structured Query Language)
+
+2) PL/SQL - (Procedural Language Extensions to SQL)
+
+
+Client/Server Architecture 
+==========================
+In this architecture we will see how our data store from frontend to backend.
+
+Diagram: oracle1.1
+
+Frontend
+--------
+The one which is visible to the enduser to perform some operations is called frontend.
+ex:
+	Java, .Net, Python, Perl and etc.
+
+Communication Channel
+--------------------
+It acts like a bridge between frontend and backend.
+ex:
+	JDBC - Java Database Connectivity 
+	ODBC - Open Database Connectivity 
+	PDBC - Python Database Connectivity 
+	
+Backend 
+-------
+The one which is not visible to the enduser but it performs some operations based on the instructions given by frontend is called backend.
+ex:
+	Oracle, MySQL, PostgreSQL, terdata, mariaDB and etc.
+
+SQL 
+====
+SQL stands for Structured Query Language which is pronounce as SEQUEL.
+
+It is used to interact with oracle database.
+
+It is a command based language.
+
+It is a case insensitive language.
+
+Every command must starts with verb like create, insert, update, delete and etc.
+
+Every command must ends with semicolon.
+
+It is developed by Mr. Codd in 1972 (By IBM).
+
+
+Sub languages of SQL 
+====================
+We have five sub languages of SQL.
+
+1) DDL (Data Definition Language)
+
+2) DML (Data Manipulation Language)
+
+3) DRL/DQL (Data Retrieve/Query Language)
+
+4) TCL (Transaction Control Language)
+
+5) DCL (Data Control Language)
+
+
+1) DDL (Data Definition Language)
+---------------------------------
+This language is used to maintain the objects in database.
+It is a collection of five commands.
+ex:
+	create, alter, drop, truncate and rename.	
+
+
+2) DML (Data Manipulation Language)
+------------------------------------
+This language is used to manipulate the data which is present in database.
+It is a colllection of four commands.
+ex:
+	insert, update , delete and merge.
+
+
+3) DRL/DQL (Data Retrieve/Query Language)
+------------------------------------------
+This language is used to retrieve the data which is present in database.
+It is a collection of one command.
+ex:
+	select 
+
+4) TCL (Transaction Control Language)
+--------------------------------------
+This language is used to maintain the transaction in database.
+It is a collection of three commands.
+ex:
+	commit, rollback and savepoint.
+
+
+5) DCL (Data Control Language)
+--------------------------------
+This language is used to control the accessing of data.
+It is a collection of two commands.
+ex:
+	grant and revoke.
+
+
+Table 
+=====
+Table is an object which is used to store the data in the form of rows and columns.
+ex:
+	No	Name	Address
+	----	-----	-------
+	101 |	Alan |	Texas
+	---	-----	-------
+	102 |	Jose |	Florida
+	---	-----	-------
+	103 |	Mark |	Dellas
+	---	-----	-------
+	Here we have 3 rows and 3 columns.
+
+A data which is present in a table is a case sensitive.
+ex:
+	select * from student where name='alan';  -- no output 	
+	select * from student where name='Alan';  -- output 
+
+
+Oracle 
+=======
+Version		:	10g or 11g or 12c 
+
+Vendor		:	Oracle Corporation 
+
+Website		:	www.oracle.com/in/database
+
+Software	:	Express Edition 
+
+Port No		:	1521
+
+UserName	:	system (default) 
+
+Password	:	admin 
+
+Download link	:
+ 
+https://drive.google.com/file/d/0B9rC21sL6v0td1NDZXpkUy1oMm8/view?usp=drive_link&resourcekey=0-aKooR3NmAh_eLo_qGw_inA
+
+
+
+Establish the connection with Database 
+=======================================
+To perform any operation in database we need to establish the connection and once work with database is completed we need to close the connection.
+
+1)
+	SQL> connect
+		enter username : system  
+		enter password : admin 
+	SQL> disconnect 
+
+2) 
+	SQL> conn 
+		enter username : system 
+		enter password : admin 
+	SQL> disc 
+
+3) 
+	SQL> conn system/admin 
+	SQL> disc 
+
+
+
+
+
+

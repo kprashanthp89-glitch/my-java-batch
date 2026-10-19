@@ -1,0 +1,241 @@
+Duplicate table
+===============
+Using create and select command we can create a duplicate table.
+If something goes wrong then we can recover that situation by using copy of a table.  
+ex:
+	drop table stud;
+	create table stud as select * from emp;
+	create table stud as select eid,ename,esal from emp;	
+	create table stud as select * from emp where deptno=10;
+	create table stud as select * from emp where eid in(201,202,203);
+	create table stud as select * from emp where esal>35000;
+	create table stud as select * from emp where comm is null;
+	create table stud as select * from emp where ename like 'A%';
+
+
+CL SCR 
+======
+It is used to clear the output screen of sql command prompt.
+ex:
+	cl scr
+
+
+
+
+Merge command 
+==============
+Merge command is possible by using insert and update command.
+
+student10
+----------
+drop table student10;
+create table student10(sno number(3),sname varchar2(10),sadd varchar2(12));
+insert into student10 values(101,'raja','hyd');
+insert into student10 values(102,'ravi','delhi');
+insert into student10 values(103,'ramana','vizag');
+commit;
+
+student20
+---------
+drop table student20;
+create table student20(sno number(3),sname varchar2(10),sadd varchar2(12));
+insert into student20 values(103,'Alan','Texas');
+insert into student20 values(104,'Kelvin','Florida');
+commit;
+
+
+	merge into student10 s1
+	using student20 s2
+	on(s1.sno=s2.sno)
+	when matched then
+	update set s1.sname=s2.sname,s1.sadd=s2.sadd
+	when not matched then 
+	insert values(s2.sno,s2.sname,s2.sadd);
+
+	select * from student10;
+	select * from student20;
+
+
+Sub Queries
+===========
+If we declare a query inside another query such concept is called sub query.
+
+In sub queries, first inner query will execute then outer query.
+
+Sub queries are used to read the records based on unknown values.
+
+Sub query can be nested upto 32 levels.
+
+We have following list of sub queries.
+
+1) Scalar Sub Query 
+
+2) Inline View 
+
+3) Single Row Sub Query 
+
+4) Multiple Row Sub Query 
+
+5) Multiple Column Sub Query 
+
+
+1) Scalar Sub Query 
+-------------------
+If a sub query returns single value is called scalar sub query.
+It contains one row and one column.
+It acts like a column.
+ex:
+	select ename,(select avg(esal) from emp) as avg_sal from emp; 
+
+
+2) Inline View 
+-------------
+If a sub query in from clause then it is called inline view.
+It returns multiple rows.
+It acts like a table.
+ex:
+	select * from (select * from emp order by eid) where rownum<=3;
+
+	or
+
+	select * from (select * from emp order by eid desc) where rownum<=3;
+
+3) Single Row Sub Query 
+----------------------
+If a sub query returns only one row then it is called single row sub query.
+
+ex:
+	select max(esal) from emp where esal<(select max(esal) from emp);	
+
+	or
+
+	select * from emp where esal > (select esal from emp where ename='Mark');
+
+	or 
+
+	select * from emp where eid = (select eid from emp where ename='Alan')
+	and ename = (select ename from emp where esal=9000);
+
+
+4) Multiple row sub query 
+-----------------------
+If a sub query returns multiple rows then it is called multiple row sub query.
+
+To work with multiple row subquery we required multiple row operators.
+
+We have three multiple row operators.
+i) ANY 
+ii) ALL 
+ii) IN 
+
+ANY 
+----
+	select * from emp where esal > ANY (select esal from emp where deptno=10);
+	select * from emp where esal < ANY (select esal from emp where deptno=10);
+
+ALL
+---
+	select * from emp where esal > ALL (select esal from emp where deptno=10);
+
+IN
+---
+	select * from emp where esal IN (select esal from emp where deptno=10);
+
+
+5) Multiple column sub query 
+----------------------------
+If a sub query returns more then one column then it is called multiple column sub query.
+
+ex:
+	select * from emp where(eid,ename,esal) IN (select eid,ename,esal from emp);	
+	or
+	select eid,ename,esal from emp where(eid,ename,esal) IN (select eid,ename,esal from emp);
+
+Interview Questions 
+====================
+Q) Write a query to display the items which are expired?
+
+	select * from items where expiry_date < sysdate;	
+
+
+
+Q) What is the difference between Oracle and MongoDB ?
+
+Oracle						MongoDB
+---------					--------
+It is a relational databaase. 			It is a non-relational database.
+						(It is document based database)
+
+It is not designed for hierchical data.		It is designed for hierachical data.
+
+It supports structured query language.		It supports JSON query language.
+
+It does not store the data in key and value	It stores the data in key and value
+pair.						pair.
+
+It contains tables.				It contains collections.
+
+It is row based.				It is document based.
+
+It is column based.				It is field based.
+
+
+Q) What is the difference between Normalization and Denormalization ?
+
+Normalization				Denormalization 
+---------------				---------------
+It increase the complexity due 		It reduce the complexity due to 
+to multiple tables.			single table.
+
+No data redundant.			Data redundant.
+
+No waste of memory.			Waste of memory.
+
+Need of joins.				No need of joins.
+
+Low data availability.			High data availability.
+ 
+Slower to read.				Slower to write.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

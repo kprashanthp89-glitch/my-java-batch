@@ -1,0 +1,216 @@
+TCL commands
+============
+1) commit 
+
+2) rollback 
+
+3) savepoint 
+
+1) commit 
+---------
+It is used to make the changes permanent to database.
+
+ex:
+	drop table student;
+	create table student(sno number(3),sname varchar2(10),sadd varchar2(12));
+	insert into student values(101,'raja','hyd');
+	insert into student values(102,'ravi','delhi');
+	commit;
+	select * from student;	
+
+2) rollback 
+-----------
+It is used to undo the changes which are not permanent.
+ex:
+	drop table student;
+	create table student(sno number(3),sname varchar2(10),sadd varchar2(12));
+	insert into student values(101,'raja','hyd');
+	insert into student values(102,'ravi','delhi');
+	commit;
+	insert into student values(103,'Lara','Florida');
+	insert into student values(104,'Nancy','Texas');
+	select * from student;  -- 4 rows selected 
+	rollback;
+
+3) savepoint 
+--------------
+It is used to maintain the logical marking in database.
+Instead of complete rollback we can rollback upto savepoint.
+
+ex:
+	drop table student;
+	create table student(sno number(3),sname varchar2(10),sadd varchar2(12));
+	insert into student values(101,'raja','hyd');
+	insert into student values(102,'ravi','delhi');
+	savepoint sp1;
+	insert into student values(103,'Lara','Florida');
+	insert into student values(104,'Nancy','Texas');
+	savepoint sp2;
+	insert into student values(105,'John','Dellas');
+	insert into student values(106,'Jack','Chicago');
+	select * from student; -- 6 rows selected 	
+	rollback to sp2;
+	select * from student; -- 4 rows selected
+	rollback to sp1;
+	select * from student; -- 2 rows selected
+
+
+DCL commands
+=============
+Schema 
+------
+	A schema is a memory location which is used to run SQL commands.
+
+Privileges
+----------
+	Permission given to a user is called privileges.
+	We have two types of privileges.
+	1) System privilege : Permission given by DBA to user.
+	2) Object privilege : Permission given by one developer to another developer.
+
+grant 
+-----
+It is used to grant the permissions to user.
+ex:
+	grant <privilege1>,<privilege2>  to user_name;
+
+revoke
+------
+It is used to revoke the permissions form user.
+ex: 
+	revoke <privilege1>,<privilege2> from user_name;
+
+
+1 SQL> SET SQLPROMPT DBA>
+2 SQL> SET SQLPROMPT RAM> 
+3 SQL> SET SQLPROMPT JHANSI>
+
+DBA> create user RAM identified by RAM123;
+DBA> create user JHANSI identified by JHANSI;
+
+RAM> conn RAM/RAM123 --logon denied
+JHANSI> conn JHANSI/JHANSI --logon denied 
+
+DBA> grant connect,resource to ram,jhansi;
+
+RAM> conn RAM/RAM123 
+
+JHANSI> conn JHANSI/JHANSI  
+
+RAM> 
+create table employee(eid number(3),ename varchar2(10),esal number(10,2));
+insert into employee values(301,'Alan',18000);
+insert into employee values(302,'Jose',44000);
+insert into employee values(303,'Kelvin',31000);
+commit;
+
+JHANSI> select * from ram.employee; -- table or view does not exist 
+
+RAM> grant select on employee to jhansi;
+
+JHANSI> select * from ram.employee;
+
+JHANSI> delete from ram.employee; -- insufficient privileges
+
+RAM> grant update,delete on employee to jhansi;
+
+JHANSI> delete from ram.employee; 
+JHANSI> commit;
+
+RAM> revoke select,update,delete on employee from jhansi;
+
+RAM> disc 
+
+JHANSI> disc 
+
+DBA> revoke connect,resource from ram,jhansi;
+
+
+Synonyms 
+========
+Alternate name given to a database table is called synonym.
+
+We can use synonym name for all commands.
+
+The main purpose of synonym is convenience, abstraction and security.
+
+syntax:
+--------
+	create synonym <synonym_name> for <object_name>;
+
+ex:
+	create synonym sy1 for student;
+	select * from sy1;
+	delete from sy1 where sno=104;
+	select * from sy1;
+	select * from student;
+
+
+Q) Write a query to see the list of synonyms present in database?
+
+	select synonym_name from user_synonyms;
+
+
+Q) Write a query to drop the synonym ?
+
+	drop synonym sy1;
+
+
+Indexes 
+========
+Index is used to improve the performance of select command/statement.
+
+Index in a book is similar to index in a table.
+
+We can create index only to those columns which are widely used in where clause.
+
+When we create index , two columns will be created one is rowid and another is indexed column and all the rows in indexed column store in ascending order.
+
+ex:
+		indexed table 
+	-----------------------
+	ROWID		SAL 
+	------	---------------
+			9000
+			19000
+			23000
+			38000
+			41000
+			45000
+	------------------------
+
+There are two ways to create a index.
+
+1) Simple index
+--------------
+If index is created only for one column is called simple index.
+ex:
+	create index idx1 on emp(eid);
+	ex:
+	Here index is used when we use eid in where clause.
+	ex:
+		select * from emp where eid=205;
+
+2) Complex index 
+-----------------
+If index is created for multiple columns is called complex index.
+ex:
+	create index idx2 on emp(esal,job);
+	ex:
+	Here index is used when we use esal and job in where clause.
+	ex:
+		select * from emp where esal=9000 and job='clerk';
+
+
+Q) Write a query to see the list the indexes present in database?
+	
+	select index_name from user_indexes;
+
+
+Q) Write a query to drop the index?
+	
+	drop index idx1;
+	drop index idx2;
+
+
+
